@@ -22,6 +22,10 @@
         <version.quarkus.platform>3.6.4</version.quarkus.platform>
     </properties>
 
+    <modules>
+        <module>actions</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
