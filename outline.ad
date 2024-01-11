@@ -1,0 +1,48 @@
+* Github Action
+** https://docs.quarkiverse.io/quarkus-github-action/dev/index.html[Developer Docs]
+** Create
+*** Use cli. Maven's also an option
+*** Make sure names are correct. Changing them later is tricky.
+*** Repo structure is very important, so be careful organizing things
+** Define your action
+*** Script creates a demo action, which you can modify
+*** If you want more than one action in your library, use `@Action('actionName')` on the method
+*** CDI inject works. Some built-ins:
+**** Command
+**** Inputs
+**** Context
+**** GitHub
+** Test drive your action
+*** Commit and push to Github
+*** Give the workflow time to run
+*** Create a separate repo with a workflow like this
++
+-----
+name: Action Test
+
+on:
+  workflow_dispatch:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Quarkus Action Demo
+        uses: jasondlee/presentation-subatomic-github-actions@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+-----
+*** Any commit to the test repo (including adding the workflow) will cause it to run.
+*** You should see
+**** image:images/action_notice.png[]
+**** image:images/action_job_summary.png[]
+* Github App
+** https://docs.quarkiverse.io/quarkus-github-app/dev/index.html[Developer Docs]
+** `GitHub Apps are tools that extend GitHub's functionality. GitHub Apps can do things on GitHub like open issues, comment on pull requests, and manage projects. They can also do things outside of GitHub based on events that happen on GitHub`
+** Create
+*** 
