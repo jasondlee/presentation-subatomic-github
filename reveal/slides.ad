@@ -1,0 +1,114 @@
+= Supersonic, Subatomic GitHub
+:revealjs_theme: sky
+:source-highlighter: highlight.js
+:imagesdir: images
+:title-slide-background-image: cover.png
+:title-slide-transition: zoom
+:title-slide-transition-speed: fast
+:revealjs_hash: true
+:revealjs_center: false
+:revealjs_width: "100%"
+:revealjs_height: "100%"
+
+
+Jason Lee, Red Hat
+Principal Software Engineer, Red Hat
+
+== Who Am I?
+
+* Software developer since 1997 (professionally)
+* Principal Software Engineer at Red Hat
+** WildFly/EAP
+** Undertow
+* Book Author - https://www.packtpub.com/application-development/java-9-programming-blueprints[Java 9 Programming Blueprints]
+* Blogger - https://jasondl.ee[]
+
+== What we'll cover
+
+* A _brief_ introduction to Quarkus (?)
+* GitHub Actions
+* GitHub Apps
+
+== GitHub Actions
+
+* "GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipeline."
+* You can chain together actions to make a workflow
+* Learn more at https://docs.github.com/en/actions[]
+
+== Create a Quarkus GitHub Action
+
+* Developer docs: https://docs.quarkiverse.io/quarkus-github-action/dev/index.html[]
+* Create the action using the Quarkus CLI:
++
+[source,bash]
+----
+quarkus create app \
+    -x quarkus-github-action \
+    com.steeplesoft:subatomic-github-action:1.0-SNAPSHOT \
+    --name="My Quarkus Action" \
+    --description="Subatomic GitHub Action" \
+    --data=quarkiverse-github-action-codestart.github-repository=jasondlee/subatomic-github-action
+----
+* You _can_ use Maven if you want. See docs link above.
+
+== Define your action
+
+Your action is a simple annotated Java method:
+[source,java]
+----
+@Action
+void action(Commands commands) {
+    commands.notice("Hello from Quarkus GitHub Action");
+    commands.appendJobSummary(":wave: Hello from Quarkus GitHub Action");
+}
+----
+
+== Define your action (cont)
+
+[%step]
+* If you want more than one action in your library, use `@Action("actionName")`
+* CDI injection works. Some built-in objects
+** `Command`
+** `Inputs`
+** `Context`
+** `GitHub`
+
+== Test drive your action
+
+[%step]
+* Commit your action and push it GitHub
+* Give the workflow time to run
+* Create a separate repo with a workflow like:
++
+[source]
+----
+jobs:
+    build_and_deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Quarkus Action Demo
+              uses: jasondlee/presentation-subatomic-github-actions@master
+              with:
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+----
+
+== Test drive your action (cont)
+
+// [%step]
+* Any commit to the repo will cause the action to run
+* You should see something like this:
++
+[cols="1",align="top"]
+image::action_notice.png[]
+image::action_job_summary.png[]
+* You _can_ write integration tests: https://docs.quarkiverse.io/quarkus-github-action/dev/testing.html[]
+
+== GitHub Apps
+
+* "GitHub Apps are tools that extend GitHub's functionality. GitHub Apps can do things on GitHub like open issues, comment on pull requests, and manage projects. They can also do things outside of GitHub based on events that happen on GitHub."
+
+[.notes]
+--
+* tell anecdote
+* make a point
+--
