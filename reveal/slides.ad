@@ -9,7 +9,7 @@
 :revealjs_center: false
 :revealjs_width: "100%"
 :revealjs_height: "100%"
-
+:customcss: styles.css
 
 Jason Lee, Red Hat
 Principal Software Engineer, Red Hat
@@ -106,9 +106,87 @@ image::action_job_summary.png[]
 == GitHub Apps
 
 * "GitHub Apps are tools that extend GitHub's functionality. GitHub Apps can do things on GitHub like open issues, comment on pull requests, and manage projects. They can also do things outside of GitHub based on events that happen on GitHub."
+* Steps
+[%step]
+** Create a playground project
+** Register the app with GitHub
+** Create a private key
+** Install the application in a playground project
+** Create the Quarkus app
+** Profit
+
+== Register the app with GitHub
+
+* Visit https://github.com/settings/apps/new[]
+* Only required fields (for an app of this size)
+** Application name
+** Homepage URL
+** Webhook URL
+*** Your app is probably behind a firewall, so we'll need a proxy. More in a minute...
+
+== Register the app with GitHub (cont)
+* Webhook secret
+** Not really needed at this point either, but a good idea
+** `ruby -rsecurerandom -e 'puts SecureRandom.hex(20)'`
+** Keep a copy of this
+* Permissions
+** Start with `Read & write` under `Repository Permission` for `Issues` and `Pull requests`
+
+== Register the app with GitHub (cont)
+* Subscribe to events
+** `Issues`
+** `Issue comment`
+** `Pull request`
+
+== Notes on the Webhook URL
+[%step]
+* Captain Hook --  I mean Smee to the rescue https://smee.io[]
+* Click on `Start a new channel`
+* Make a copy of the `Webhook Proxy URL`
+* Quarkus GitHub App connects to smee.io automatically
+
+== Final steps on GitHub
+[%step]
+* Click `Create GitHub App`
+** You should see a warning about needing a private key
+* Create a private key
+** In the `Private keys` section, click on Generate a private key
+* Install the app
+** Click the `Install App` link in the left nav
+** Select an account into which to install the application
+
+== Create the Quarkus app
+[%step]
+* Create the application using the Quarkus CLI:
++
+[source]
+----
+quarkus create app \
+    -x quarkus-github-app \
+    com.steeplesoft:my-github-app \
+    --no-code
+----
+* Initialize the environment:
++
+[source]
+----
+QUARKUS_GITHUB_APP_APP_ID=<the numeric app id>
+QUARKUS_GITHUB_APP_APP_NAME=<the name of your app>
+QUARKUS_GITHUB_APP_WEBHOOK_PROXY_URL=<your smee.io channel URL>
+QUARKUS_GITHUB_APP_WEBHOOK_SECRET=<your webhook secret>
+QUARKUS_GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\
+                  <your private key>                          \
+-----END RSA PRIVATE KEY-----
+----
+* Fire it up
++
+[source]
+----
+$ quarkus dev
+----
 
 [.notes]
 --
 * tell anecdote
-* make a point
+* make a pointmeme
 --

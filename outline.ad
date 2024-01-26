@@ -1,5 +1,5 @@
 * Github Action
-** https://docs.quarkiverse.io/quarkus-github-action/dev/index.html[Developer Docs]
+** Developer Docs: https://docs.quarkiverse.io/quarkus-github-action/dev/index.html[]
 ** Create
 *** Use cli. Maven's also an option
 *** Make sure names are correct. Changing them later is tricky.
@@ -41,8 +41,47 @@ jobs:
 *** You should see
 **** image:images/action_notice.png[]
 **** image:images/action_job_summary.png[]
+*** You _can_ write integration tests: https://docs.quarkiverse.io/quarkus-github-action/dev/testing.html[]
 * Github App
-** https://docs.quarkiverse.io/quarkus-github-app/dev/index.html[Developer Docs]
+** Developer Docs: https://docs.quarkiverse.io/quarkus-github-app/dev/index.html[]
 ** `GitHub Apps are tools that extend GitHub's functionality. GitHub Apps can do things on GitHub like open issues, comment on pull requests, and manage projects. They can also do things outside of GitHub based on events that happen on GitHub`
-** Create
-*** 
+** Register Github App: https://github.com/settings/apps
+*** Click `New Github App`
+**** Application Name
+**** Homepage URL
+**** Webhook URL
+***** https://smee.io/
+**** Webhook secret
+**** Permissions
+***** Depends on your app's needs
+***** Start with Issues and Pull requests  `Read & write`
+**** Subscribe to events
+***** Issues
+***** Issue comment
+***** Pull request
+** Create a private key
+*** Private keys
+*** `Generate a private key`
+** Install your app
+*** https://github.com/settings/apps
+*** Edt > Install App
+** Create the application
+*** Create using Quarkus CLI:
++
+-----
+quarkus create app \
+    -x quarkus-github-app \
+    org.acme:my-github-app \
+    --no-code
+-----
+*** Create a .env file:
++
+-----
+QUARKUS_GITHUB_APP_APP_ID=<the numeric app id>
+QUARKUS_GITHUB_APP_APP_NAME=<the name of your app>
+QUARKUS_GITHUB_APP_WEBHOOK_PROXY_URL=<your Smee.io channel URL>
+QUARKUS_GITHUB_APP_WEBHOOK_SECRET=<your webhook secret>
+QUARKUS_GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\
+                  <your private key>                          \
+-----END RSA PRIVATE KEY-----
+-----
