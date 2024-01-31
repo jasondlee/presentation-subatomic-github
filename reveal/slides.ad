@@ -23,11 +23,31 @@ Principal Software Engineer, Red Hat
 * Book Author - https://www.packtpub.com/application-development/java-9-programming-blueprints[Java 9 Programming Blueprints]
 * Blogger - https://jasondl.ee[]
 
+== My Family
+
+image::seine.jpg[Family,,"75%"]
+
 == What we'll cover
 
 * A _brief_ introduction to Quarkus (?)
 * GitHub Actions
 * GitHub Apps
+
+== Why Java? Why Quarkus?
+
+[%step]
+* Why Java?
+[%step]
+** Mature, battle-tested language
+** Immense number of libraries, frameworks, etc.
+** Great global community
+** It's not Javascript. :)
+* Why Quarkus?
+[%step]
+** Leverages existing Java/JVM knowledge
+** Full CDI integration
+** Easily unit testable
+** Native compilation
 
 == GitHub Actions
 
@@ -125,12 +145,14 @@ image::action_job_summary.png[]
 *** Your app is probably behind a firewall, so we'll need a proxy. More in a minute...
 
 == Register the app with GitHub (cont)
+
+[%step]
 * Webhook secret
 ** Not really needed at this point either, but a good idea
 ** `ruby -rsecurerandom -e 'puts SecureRandom.hex(20)'`
 ** Keep a copy of this
 * Permissions
-** Start with `Read & write` under `Repository Permission` for `Issues` and `Pull requests`
+** Start with `Read & write` under `Repository Permission` for `Issues` and `Pull request`
 
 == Register the app with GitHub (cont)
 * Subscribe to events
@@ -140,7 +162,10 @@ image::action_job_summary.png[]
 
 == Notes on the Webhook URL
 [%step]
-* Captain Hook --  I mean Smee to the rescue https://smee.io[]
+* Your app is probably behind a firewall, so we'll need a proxy.
+* image:smee.png["Mr. Smee",,500,float="right",aalign="text-left"]
++
+Smee to the rescue https://smee.io[]
 * Click on `Start a new channel`
 * Make a copy of the `Webhook Proxy URL`
 * Quarkus GitHub App connects to smee.io automatically
@@ -151,9 +176,11 @@ image::action_job_summary.png[]
 ** You should see a warning about needing a private key
 * Create a private key
 ** In the `Private keys` section, click on Generate a private key
+** Save the `.pem` file
 * Install the app
 ** Click the `Install App` link in the left nav
 ** Select an account into which to install the application
+** Select the playground repository created above
 
 == Create the Quarkus app
 [%step]
@@ -168,6 +195,7 @@ quarkus create app \
 ----
 * Initialize the environment:
 +
+..env
 [source]
 ----
 QUARKUS_GITHUB_APP_APP_ID=<the numeric app id>
@@ -184,6 +212,58 @@ QUARKUS_GITHUB_APP_PRIVATE_KEY=-----BEGIN RSA PRIVATE KEY-----\
 ----
 $ quarkus dev
 ----
+
+== Create your first action
+
+* Simple Java methods with annotated parameters:
+[source,java]
+----
+import java.io.IOException;
+
+import io.quarkiverse.githubapp.event.Issue;
+import org.kohsuke.github.GHEventPayload;
+import org.kohsuke.github.GHIssue;
+import org.kohsuke.github.GHIssueChanges;
+
+public class IssueProcessor {
+    void onOpen(@Issue.Opened GHEventPayload.Issue issuePayload) throws IOException {
+        issuePayload.getIssue().comment("Hello from my GitHub App");
+    }
+}
+----
+
+== Some Supported Events
+[cols="1,1,1",grid="none",stripes="odd",role="mediumfont"]
+|===
+|GitHub Event Type |Events |Payload
+
+| issues
+| @Issue.Assigned, @Issue.Closed, @Issue.Deleted, @Issue.Demilestoned, @Issue.Edited, @Issue.Labeled, @Issue.Locked, @Issue.Milestoned, @Issue.Opened, @Issue.Pinned, @Issue.Reopened, @Issue.Transferred, @Issue.Unassigned, @Issue.Unlabeled, @Issue.Unlocked, @Issue.Unpinned
+| GHEventPayload.Issue
+
+| issue_comment
+| @IssueComment.Created, @IssueComment.Deleted, @IssueComment.Edited
+| GHEventPayload.IssueComment
+
+| pull_request
+| @PullRequest.Assigned, @PullRequest.Closed, @PullRequest.Edited, @PullRequest.Labeled, @PullRequest.Locked, @PullRequest.Opened, @PullRequest.ReadyForReview, @PullRequest.Reopened, @PullRequest.ReviewRequested, @PullRequest.ReviewRequestRemoved, @PullRequest.Synchronize, @PullRequest.Unassigned, @PullRequest.Unlabeled, @PullRequest.Unlocked
+| GHEventPayload.PullRequest
+
+| release
+| @Release.Created, @Release.Deleted, @Release.Edited, @Release.Prereleased, @Release.Published, @Release.Released, @Release.Unpublished
+| GHEventPayload.Release
+
+|===
+
+== Testing
+
+[%step]
+* You can certainly do manual testing
+* JUnit is supported, but you need something to trigger the event listener
+* http://localhost:8080/replay/[Replay UI] to the rescue
+* Save the results of a manual test to a JSON file
+* Load the file and mock the event from your test
+
 
 [.notes]
 --

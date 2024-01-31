@@ -1,3 +1,13 @@
 .reveal ul {
     display: block;
 }
+
+.mediumfont {
+    font-size: medium;
+}
+
+
+img {
+    max-width: 90%;
+    max-height: 90%;
+}
