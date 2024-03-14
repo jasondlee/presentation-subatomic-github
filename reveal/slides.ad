@@ -17,6 +17,7 @@ Principal Software Engineer, Red Hat
 == Who Am I?
 
 * Software developer since 1997 (professionally)
+* Java Champion
 * Principal Software Engineer at Red Hat
 ** WildFly/EAP
 ** Undertow
@@ -254,6 +255,15 @@ public class IssueProcessor {
 | GHEventPayload.Release
 
 |===
+
+== Configuration
+
+* Your app can be configured per-repository (e.g., `.github/my-config.yml`)
+* Formats supported
+** JSON
+** YAML
+** Text
+* Automatic deserialization and injection supported
 
 == Testing
 
