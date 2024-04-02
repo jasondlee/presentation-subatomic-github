@@ -173,7 +173,7 @@
                 </li>
                 <li class="fragment">Click on Start a new channel</li>
                 <li class="fragment">Make a copy of the Webhook Proxy URL</li>
-                <li class="fragment">Quarkus GitHub App connects to smee.io automatically</li>
+                <li class="fragment">Quarkus GitHub App connects to smee.io automatically in dev mode</li>
             </ul>
         </section>
 
@@ -250,7 +250,7 @@ public class IssueProcessor {
         <section>
             <h3>Configuration</h3>
             <ul>
-                <li class="fragment">Your app can be configured per-repository (e.g., .github/bot-config.yml)</li>
+                <li class="fragment">Your app can be configured per-repository (e.g., <code>.github/bot-config.yml</code>)</li>
                 <li class="fragment">Formats supported
                     <ul>
                         <li>JSON</li>
@@ -320,13 +320,21 @@ public class EventHandlerTest {
         </section>
 
         <section>
+            <h3>Testing (cont)</h3>
+            <p>Use the Replay UI to capture event details -
+                <a href="http://localhost:8080/replay">http://localhost:8080/replay</a>
+            </p>
+            <img src="img/replay_ui.png" alt="replay ui">
+        </section>
+
+        <section>
             <h1>Thank You!</h1>
         </section>
 
     </div>
 
     <div class="footer">
-        <img src="img/rh200.png" style="align-content: end" width="100" height="30" alt="Red Hat logo"/>
+        <img src="img/rh200.png" style="align-content: end" widtha="100" heighta="30" alt="Red Hat logo"/>
     </div>
 
     <script src="reveal/reveal.js"></script>
