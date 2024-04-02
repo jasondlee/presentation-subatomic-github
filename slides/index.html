@@ -4,31 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>Supersonic, Subatomic GitHub</title>
 
     <link rel="stylesheet" href="reveal/reset.css">
     <link rel="stylesheet" href="reveal/reveal.css">
     <link rel="stylesheet" href="reveal/theme/white.css">
 
     <link href='https://fonts.googleapis.com/css?family=Red+Hat+Text|PT+Mono|Titillium+Web' rel='stylesheet'>
-    <!--		<link rel="stylesheet" type="text/css" href="wildfly.css"/>-->
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="reveal/plugin/highlight/monokai.css">
-
-    <style>
-        .reveal .footer {
-            position: absolute;
-            bottom: 0px;
-            left: 0px;
-            right: 0px;
-            font-size: 0.5em;
-        }
-
-        .reveal pre {
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="css/custom.css">
 
 </head>
 <body>
@@ -49,59 +35,39 @@
             <h3>About Me</h3>
             <ul>
                 <li>I’m a Principal Software Engineer at Red Hat
-                    <img src="img/duke_champion.png" style="height: 75px; float: right;">
+                    <img src="img/duke_champion.png" style="height: 150px; float: right;">
                 </li>
                 <li>Software developer since 1997</li>
                 <li>Java Champion</li>
                 <li>
-                    Author - <a href="https://www.packtpub.com/application-development/java-9-programming-blueprints">Java
-                    9
-                    Programming Blueprints</a>
+                    Author -
+                    <a href="https://www.packtpub.com/application-development/java-9-programming-blueprints">
+                        Java 9 Programming Blueprints
+                    </a>
                 </li>
                 <li>Blogger - <a href="https://jasondl.ee">https://jasondl.ee</a></li>
             </ul>
         </section>
 
         <section data-background-image="img/seine.jpg">
-            <div style="font-weight: bold; font-size: xxx-large; position: absolute; bottom: -17em; color: white;">My
-                Family
+            <div style="font-weight: bold; font-size: xxx-large; position: absolute; bottom: -17em; color: white;">
+                My Family
             </div>
         </section>
 
         <section>
             <h3>What we'll cover</h3>
             <ul>
-                <li>Why Java? Why Quarkus?</li>
-                <li>GitHub Actions</li>
-                <li>GitHub Apps</li>
+                <li>What is a GitHub App</li>
+                <li>Why use Java?</li>
+                <li>Why use Quarkus?</li>
+                <li>Building an app</li>
             </ul>
-        </section>
-
-        <section>
-            <h3>Why Java?</h3>
-            <ul>
-                <li class="fragment">Mature, battle-tested language</li>
-                <li class="fragment">Great global community</li>
-                <li class="fragment">Immense number of libraries, frameworks, etc</li>
-                <li class="fragment">It's not Javascript. :)</li>
-            </ul>
-            <aside class="notes">Some notes. They are only visible using onstage shell.</aside>
-        </section>
-
-        <section>
-            <h3>Why Quarkus?</h3>
-            <ul>
-                <li class="fragment">Leverages existing Java/JVM knowledge</li>
-                <li class="fragment">Full CDI integration</li>
-                <li class="fragment">Easily unit testable</li>
-                <li class="fragment">Native compilation</li>
-            </ul>
-            <aside class="notes">Some notes. They are only visible using onstage shell.</aside>
         </section>
 
         <section>
             <h3>GitHub Applications</h3>
-            <ul style="list-style: none">
+            <ul>
                 <li class="fragment">"GitHub Apps can do things on GitHub like open issues, comment on pull requests,
                     and manage projects. They can also do things outside of GitHub based on events that happen on GitHub."</li>
                 <li class="fragment">Example use cases:
@@ -116,7 +82,29 @@
         </section>
 
         <section>
-            <h3>Steps to create a GitHub App</h3>
+            <h3>Why use Java?</h3>
+            <ul>
+                <li class="fragment">Mature, battle-tested language</li>
+                <li class="fragment">Great global community</li>
+                <li class="fragment">Immense number of libraries, frameworks, etc</li>
+                <li class="fragment">It's not Javascript. :)</li>
+            </ul>
+            <aside class="notes">Some notes. They are only visible using onstage shell.</aside>
+        </section>
+
+        <section>
+            <h3>Why use Quarkus?</h3>
+            <ul>
+                <li class="fragment">Leverages existing Java/JVM knowledge</li>
+                <li class="fragment">Full CDI integration</li>
+                <li class="fragment">Easily unit testable</li>
+                <li class="fragment">Native compilation</li>
+            </ul>
+            <aside class="notes">Some notes. They are only visible using onstage shell.</aside>
+        </section>
+
+        <section>
+            <h3>Building a GitHub App</h3>
             <ul>
                 <li class="fragment">Register the app with GitHub</li>
                 <li class="fragment">Create a private key</li>
@@ -138,15 +126,18 @@
                     <ul>
                         <li>Application name</li>
                         <li>Homepage URL</li>
-                        <li>Webhook URL</li>
-                    </ul>
-                </li>
-                <li class="fragment">Your app is probably behind a firewall, so we'll need a proxy. More in a minute...</li>
-                <li class="fragment">Webhook secret
-                    <ul>
-                        <li class="fragment">Not really needed at this point either, but a good idea</li>
-                        <li class="fragment"><code>ruby -rsecurerandom -e 'puts SecureRandom.hex(20)'</code></li>
-                        <li class="fragment">Keep a copy of this</li>
+                        <li>Webhook URL
+                            <ul>
+                                <li>Your app is probably behind a firewall, so we'll need a proxy. More in a minute...</li>
+                            </ul>
+                        </li>
+                        <li class="fragment">Webhook secret (optional)
+                            <ul>
+                                <li>Not really needed at this point either, but a good idea</li>
+                                <li><code>ruby -rsecurerandom -e 'puts SecureRandom.hex(20)'</code></li>
+                                <li>Keep a copy of this</li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -157,16 +148,16 @@
             <ul>
                 <li class="fragment">Permissions
                     <ul>
-                        <li class="fragment">Start with Read & write under Repository Permission for Issues and Pull
-                            request
+                        <li class="fragment">Start with <code>Read & write</code> under <code>Repository Permission</code> for
+                            <code>Issues</code> and <code>Pull requests</code>
                         </li>
                     </ul>
                 </li>
                 <li class="fragment">Subscribe to events
                     <ul>
-                        <li>Issues</li>
-                        <li>Issue comment</li>
-                        <li>Pull request</li>
+                        <li><code>Issues</code></li>
+                        <li><code>Issue comment</code></li>
+                        <li><code>Pull request</code></li>
                     </ul>
                 </li>
             </ul>
@@ -259,7 +250,7 @@ public class IssueProcessor {
         <section>
             <h3>Configuration</h3>
             <ul>
-                <li class="fragment">Your app can be configured per-repository (e.g., .github/my-config.yaml)</li>
+                <li class="fragment">Your app can be configured per-repository (e.g., .github/bot-config.yml)</li>
                 <li class="fragment">Formats supported
                     <ul>
                         <li>JSON</li>
@@ -274,7 +265,7 @@ public class IssueProcessor {
         <section>
             <h3>Configuration (cont)</h3>
             <ul>
-                <li class="fragment">Definition
+                <li>Definition
                     <pre><code data-trim data-noescape data-line-numbers="">
 public class BotConfigFile {
     public NestedConfig nested = new NestedConfig();
@@ -285,7 +276,6 @@ public class BotConfigFile {
         public String two;
         public String three;
     }
-
 }
                     </code></pre>
                 </li>
@@ -306,17 +296,21 @@ void onOpen(@Issue.Opened GHEventPayload.Issue issuePayload,
                 <li class="fragment">JUnit and Mockito are your friends</li>
                 <li class="fragment">Example
                     <pre><code data-trim data-noescape data-line-numbers>
-@QuarkusTest @GitHubAppTest
+@QuarkusTest
+@GitHubAppTest
 @ExtendWith(MockitoExtension.class)
 public class EventHandlerTest {
     @Test void testIssueOpened() throws IOException {
         given().github(mocks -> {
-                mocks.configFile("bot-config.yml").fromClasspath("/bot-config.yml");
-            }).when()
+                mocks.configFile("bot-config.yml")
+                    .fromClasspath("/bot-config.yml");
+            })
+            .when()
             .payloadFromClasspath("/issue-opened.json")
             .event(GHEvent.ISSUES).then()
             .github(mocks -> {
-                verify(mocks.issue(2106979380)).comment("Hello from my GitHub App");
+                verify(mocks.issue(2106979380))
+                    .comment("Hello from my GitHub App");
             });
     }
 }
@@ -331,7 +325,7 @@ public class EventHandlerTest {
 
     </div>
 
-    <div class="footer" style="background-color: #900">
+    <div class="footer">
         <img src="img/rh200.png" style="align-content: end" width="100" height="30" alt="Red Hat logo"/>
     </div>
 
