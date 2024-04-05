@@ -39,6 +39,7 @@
                 </li>
                 <li>Software developer since 1997</li>
                 <li>Java Champion</li>
+                <li>President of the <a href="https://okcjug.org">Oklahoma City Java Users' Group</a></li>
                 <li>
                     Author -
                     <a href="https://www.packtpub.com/application-development/java-9-programming-blueprints">
@@ -75,7 +76,7 @@
                         <li>Validate Issue, comment, or PR format/details</li>
                         <li>Control CI/CD jobs</li>
                         <li>Interact with issue tracker</li>
-                        <li>Send messages via (e.g.) Twilio</li>
+                        <li>Send messages via SMS, email, chat, etc.</li>
                     </ul>
                 </li>
             </ul>
@@ -109,7 +110,7 @@
                 <li class="fragment">Register the app with GitHub</li>
                 <li class="fragment">Create a private key</li>
                 <li class="fragment">Install the application in a playground project</li>
-                <li class="fragment">Create the Quarkus app</li>
+                <li class="fragment">Code the Quarkus app</li>
                 <li class="fragment">Profit
                     <ul style="list-style: none;">
                         <li class="fragment">GitHub Marketplace - <a href="https://github.com/marketplace">https://github.com/marketplace</a></li>
@@ -144,13 +145,26 @@
         </section>
 
         <section>
+            <h3>Notes on the Webhook URL</h3>
+            <ul>
+                <li class="fragment">Your app is probably behind a firewall, so we'll need a proxy.</li>
+                <li class="fragment">
+                    <img src="img/smee.png" height="250" style="float: right;">
+                    Smee to the rescue: <a href="https://smee.io">https://smee.io</a>
+                </li>
+                <li class="fragment">Click on <code>Start a new channel</code></li>
+                <li class="fragment">Make a copy of the <code>Webhook Proxy URL</code></li>
+                <li class="fragment">Quarkus GitHub App connects to smee.io automatically in dev mode</li>
+            </ul>
+        </section>
+
+        <section>
             <h3>Register the app with GitHub (cont)</h3>
             <ul>
-                <li class="fragment">Permissions
+                <li class="fragment">Repository Permission
                     <ul>
-                        <li class="fragment">Start with <code>Read & write</code> under <code>Repository Permission</code> for
-                            <code>Issues</code> and <code>Pull requests</code>
-                        </li>
+                        <li><code>Issues</code></li>
+                        <li><code>Pull requests</code></li>
                     </ul>
                 </li>
                 <li class="fragment">Subscribe to events
@@ -164,46 +178,32 @@
         </section>
 
         <section>
-            <h3>Notes on the Webhook URL</h3>
-            <ul>
-                <li class="fragment">Your app is probably behind a firewall, so we'll need a proxy.</li>
-                <li class="fragment">
-                    <img src="img/smee.png" height="250" style="float: right;">
-                    Smee to the rescue: <a href="https://smee.io">https://smee.io</a>
-                </li>
-                <li class="fragment">Click on Start a new channel</li>
-                <li class="fragment">Make a copy of the Webhook Proxy URL</li>
-                <li class="fragment">Quarkus GitHub App connects to smee.io automatically in dev mode</li>
-            </ul>
-        </section>
-
-        <section>
             <h3>Final steps on GitHub</h3>
             <ul>
                 <li class="fragment">Click Create GitHub App</li>
                 <li class="fragment">Create a private key
                     <ul>
-                        <li>In the Private keys section, click on Generate a private key and save it</li>
+                        <li>In the Private keys section, click on <code>Generate a private key</code> and save it</li>
                     </ul>
                 </li>
                 <li class="fragment">Install the app
                     <ul>
                         <li class="fragment">Click the <code>Install App</code> link in the left nav</li>
                         <li class="fragment">Select an account into which to install the application</li>
-                        <li class="fragment">Select the playground repository created above</li>
+                        <li class="fragment">Select the desired repository</li>
                     </ul>
                 </li>
             </ul>
         </section>
 
         <section>
-            <h3>Create the Quarkus app</h3>
+            <h3>Code the Quarkus app</h3>
             <ul>
                 <li class="fragment">Create the application using the Quarkus CLI
                     <pre><code data-trim data-noescape data-line-numbers>
 $ quarkus create app \
     -x quarkus-github-app \
-    com.steeplesoft:my-github-app \
+    com.steeplesoft:dn2024demo \
     --no-code</code></pre>
                 </li>
                 <li class="fragment">Create .env file
@@ -321,6 +321,29 @@ public class EventHandlerTest {
 
         <section>
             <h3>Testing (cont)</h3>
+            <ul>
+                <li>Add the following dependencies:
+                    <pre><code data-trim data-noescape>
+&lt;dependency&gt;
+    &lt;groupId&gt;io.quarkiverse.githubapp&lt;/groupId&gt;
+    &lt;artifactId&gt;quarkus-github-app-testing&lt;/artifactId&gt;
+    &lt;version&gt;${version.quarkus.github.app}&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+    &lt;artifactId&gt;mockito-junit-jupiter&lt;/artifactId&gt;
+    &lt;version&gt;5.3.1&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+                    </code></pre>
+                </li>
+                <li>Create <code>test/resources/bot-config.yml</code></li>
+                <li>Create <code>test/resources/issue-opened.json</code></li>
+            </ul>
+        </section>
+        <section>
+            <h3>Testing (cont)</h3>
             <p>Use the Replay UI to capture event details -
                 <a href="http://localhost:8080/replay">http://localhost:8080/replay</a>
             </p>
@@ -329,12 +352,19 @@ public class EventHandlerTest {
 
         <section>
             <h1>Thank You!</h1>
+            <ul>
+                <li><a href="https://jasondl.ee/presentations/subatomic/">Presentation</a></li>
+                <li><a href="https://docs.quarkiverse.io/quarkus-github-app/dev/index.html">Quarkus App Documentation</a></li>
+                <li><a href="https://code.quarkus.io">Quarkus Starter</a></li>
+            </ul>
+            <br/>
+            <img src="img/preso_qr.png" alt="preso qr" style="height: 200px; position: fixed; bottom: 0; right: 0;">
         </section>
 
     </div>
 
     <div class="footer">
-        <img src="img/rh200.png" style="align-content: end" widtha="100" heighta="30" alt="Red Hat logo"/>
+        <img src="img/rh200.png" alt="Red Hat logo"/>
     </div>
 
     <script src="reveal/reveal.js"></script>
@@ -356,5 +386,6 @@ public class EventHandlerTest {
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
+</div>
 </body>
 </html>
